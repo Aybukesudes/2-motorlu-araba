@@ -1,0 +1,65 @@
+#include <SoftwareSerial.h>
+SoftwareSerial hc06(2,3);
+#define solmotorpwm 5
+#define solmotorileri 7
+#define solmotorgeri 6
+
+#define sagmotorileri 9
+#define sagmotorgeri 8
+#define sagmotorpwm 10
+void setup(){
+  Serial.begin(9600);
+  hc06.begin(9600);
+  pinMode(solmotorpwm,OUTPUT);
+  pinMode(solmotorileri,OUTPUT);
+  pinMode(solmotorgeri,OUTPUT);
+  pinMode(sagmotorpwm,OUTPUT);
+  pinMode(sagmotorileri,OUTPUT);
+  pinMode(sagmotorgeri,OUTPUT);
+  pinMode(13,OUTPUT);
+  
+}
+void loop(){
+  if(hc06.available()){
+    char gelenveri=hc06.read();
+    Serial.println(gelenveri);
+
+    if(gelenveri=='b'){
+      digitalWrite(solmotorileri,HIGH);
+      digitalWrite(solmotorgeri,LOW);
+      digitalWrite(sagmotorileri,HIGH);
+      digitalWrite(sagmotorgeri,LOW);
+      analogWrite(solmotorpwm,200);
+      analogWrite(sagmotorpwm,200);
+      digitalWrite(13,HIGH);
+    }
+    else if(gelenveri=='a'){
+      digitalWrite(solmotorileri,LOW);
+      digitalWrite(solmotorgeri,HIGH);
+      digitalWrite(sagmotorileri,LOW);
+      digitalWrite(sagmotorgeri,HIGH);
+      analogWrite(solmotorpwm,200);
+      analogWrite(sagmotorpwm,200);
+
+    }
+    else if(gelenveri=='c'){
+      digitalWrite(solmotorileri,LOW);
+      digitalWrite(solmotorgeri,LOW);
+      digitalWrite(sagmotorileri,HIGH);
+      digitalWrite(sagmotorgeri,LOW);
+      analogWrite(solmotorpwm,200);
+      analogWrite(sagmotorpwm,200);
+    }
+    else if(gelenveri=='d'){
+      digitalWrite(solmotorileri,HIGH);
+      digitalWrite(solmotorgeri,LOW);
+      digitalWrite(sagmotorileri,LOW);
+      digitalWrite(sagmotorgeri,LOW);
+      analogWrite(solmotorpwm,200);
+      analogWrite(sagmotorpwm,200);
+    }
+    else{
+      analogWrite(solmotorpwm,0);
+      analogWrite(sagmotorpwm,0);
+    }
+  }}
